@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+
+* {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #24252A;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.App {
+  text-align: center;
+}
+
+h1 {
+  color: #fff;
+  margin-bottom: 0.5rem;
+  font-size: 3rem;
+  text-align: center;
+}
+
+.TodoWrapper {
+  background: #24252A;
+  margin-top: 5rem;
+  padding: 2rem;
+  border-radius: 5px;
+}
+
+.TodoForm {
+  width: 100%;
+}
+
+.todo-input {
+  outline: none;
+  background: none;
+  border: 1px solid #C2B2B4;
+  padding: 0.5rem 1rem;
+  margin-top: 1rem;
+  margin-bottom: 2rem;
+  width: 300px;
+  color: #fff;
+}
+
+.todo-input::placeholder {
+  color: #ffffff4d;
+}
+
+.todo-btn {
+  background: #C2B2B4;
+  color: #fff;
+  border: none;
+  padding: 0.55rem;
+  cursor: pointer;
+  
+}
+
+.Todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #24252A;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 20px;
+  border: solid #ffffff;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+}
+
+.savebutton{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgb(93, 156, 93);
+  color: white;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 25px;
+  align-self: center;
+  border-style: solid;
+  border-color: white;
+  margin-top: 10;
+  position: fixed;
+  bottom: 20px;
+  right: 50px;
+}
+
+.savebutton:hover{
+  -webkit-transform: translateY(-3px);
+  transform: translateY(-3px);
+}
+
+.fa-trash {
+  margin-left: 0.75rem;
+}
+
+.completed {
+  text-decoration: line-through;
+}
+
+.login{
+  color: #fff;
+  text-align: center;
+}
+
+.e:hover{
+  background-color:#c3d7e9;
+}
+
+.btndiv{
+  margin-top: 10;
+}
+
+.header{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30px 10%;
+  width: 100vw;
+  border-bottom: solid whitesmoke;
+}
+
+.input{
+  background-color: #24252A;
+  color: #fff;
+  border-style:solid;
+  justify-content: space-between;
+}
