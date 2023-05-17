@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/summerlist/static/css/main.c35a24b8.css",
+    "main.js": "/summerlist/static/js/main.ee78c055.js",
+    "index.html": "/summerlist/index.html",
+    "main.c35a24b8.css.map": "/summerlist/static/css/main.c35a24b8.css.map",
+    "main.ee78c055.js.map": "/summerlist/static/js/main.ee78c055.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.c35a24b8.css",
+    "static/js/main.ee78c055.js"
+  ]
+}
