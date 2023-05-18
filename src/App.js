@@ -9,7 +9,7 @@ import logo from './profilepic.png'
 function App() {
 
   const [challenges, setChallenges] = useState([]);
-  const challengesCollectionRef = collection(db, 'list2');
+  const challengesCollectionRef = collection(db, 'list');
   const userChallengesCollectionRef = collection(db, 'completedchallenges');
   const [completedChallenges, setCompletedChallenges] = useState([]);
 
@@ -44,13 +44,6 @@ function App() {
     console.log("loading")
     const data2 = await getDocs(userChallengesCollectionRef);
     setCompletedChallenges(data2.docs.map((doc) => ({...doc.data(), id: doc.id})))
-  }
-
-  const toggleComplete = async (id, iscompleted) => {
-    const userDoc = doc(db, "list2", id);
-    const newFields = {iscompleted: !iscompleted};
-    await updateDoc(userDoc, newFields);
-    getChallenges();
   }
 
   const register = async () => {
@@ -114,28 +107,30 @@ function App() {
     }
     <header className='header'>
         <div className='login'>
+          <button className='todo-btn' onClick={logout}> Log-out</button>
           {user?.email}
+          <h1>SUMMER LIST!</h1>
           <img className='profilepic' src={logo} onClick={toggleModal}></img>
           <input className='input' placeholder='Search...' onChange={(event) => {setSearch(event.target.value)}}/>
           {modal && (
           <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
-            <h2>AHHHHHHH</h2>
+            <h5>! Please don't make more than one account !</h5>
             <p>
               <div className='login'>
                 <h3>Register User</h3>
                 <input className='input' placeholder='Email...' onChange={(event) => {setRegisterEmail(event.target.value)}}/>
                 <input className='input' placeholder='Password' onChange={(event) => {setRegisterPassword(event.target.value)}}/>
 
-                <button className='todo-btn' onClick={register}>Create User</button>
+                <button className='todo-btn' onClick={() => {register(); toggleModal()}}>Create User</button>
               </div>     
 
               <div className='login'>
                 <h3 >Login</h3>
                 <input className='input' placeholder='Email...' onChange={(event) => {setLoginEmail(event.target.value)}}/>
                 <input className='input' placeholder='Password' onChange={(event) => {setLoginPassword(event.target.value)}}/>
-                <button className='todo-btn' onClick={login}>Login</button>
+                <button className='todo-btn' onClick={() => {login(); toggleModal()}}>Login</button>
               </div>   
             </p>
             <button className="close-modal todo-btn" onClick={toggleModal}>
@@ -154,9 +149,7 @@ function App() {
       }
 
       <div className='TodoWrapper'>
-        <h1>SUMMER LIST!</h1>
         {challenges.map((challenge) => {
-          var chaltext = challenge.challenge
               completedChallenges.map((challenges) => {
                 if(challenge?.userid === null || challenge?.userid === ""){
                   console.log("null")
@@ -166,9 +159,9 @@ function App() {
                 }
               } )  
             if(search === ""){
-              return <div  className='Todo e' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {chaltext} </p> </div>
-            }else if (chaltext.includes(search)) {
-              return <div  className='Todo e' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {chaltext} </p> </div>
+              return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
+            }else if (challenge.challenge.includes(search)) {
+              return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
           }else{
             return <div> <p id={challenge.id}></p></div>;
           }
