@@ -21,17 +21,21 @@ body {
 }
 
 h1 {
-  color: #fff;
+  color: #aeb1ca;
   margin-bottom: 0.5rem;
   font-size: 3rem;
   text-align: center;
+  position: absolute;
+  top: 1rem;
+  right: 43%;
 }
 
 .TodoWrapper {
   background: #24252A;
-  margin-top: 5rem;
+  margin-top: 1rem;
   padding: 2rem;
   border-radius: 5px;
+  align-items: ce;
 }
 
 .TodoForm {
@@ -67,6 +71,8 @@ h1 {
 .Todo {
   display: flex;
   justify-content: space-between;
+  position: relative;
+  left: 130px;
   align-items: center;
   background: #1d1e22;
   color: #fff;
@@ -75,9 +81,15 @@ h1 {
   margin-bottom: 5px;
   cursor: pointer; 
   font-size: 20px;
-  border: solid #ffffff;
+  border: solid white;
   border-width: 1px;
   font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
 }
 
 .savebutton{
@@ -118,9 +130,7 @@ h1 {
   text-align: center;
 }
 
-.e:hover{
-  background-color:#c3d7e9;
-}
+.Todo:hover{opacity: 1}
 
 .btndiv{
   margin-top: 10;
@@ -132,8 +142,7 @@ h1 {
   align-items: center;
   padding: 30px 10%;
   width: 100vw;
-  border-bottom:solid white;
-
+  background-image: linear-gradient(180deg, #464b5c, #24252A);
 }
 
 .input{
@@ -161,7 +170,7 @@ h1 {
   width: 50px;
   height: auto;
   position: absolute;
-  top: 20px;
-  right: 30px;
+  top: 30px;
+  right: 40px;
   cursor: pointer;
 }
