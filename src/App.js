@@ -1,9 +1,10 @@
 import './App.css';
+import './modal.css'
 import React, {useState ,useEffect, useTransition} from 'react'
 import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc } from 'firebase/firestore';
 import { db, auth } from './firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
-
+import logo from './profilepic.png'
 
 function App() {
 
@@ -16,8 +17,22 @@ function App() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
+  const [modal, setModal] = useState(false);
+
+  const [search, setSearch] = useState("");
 
   const [user, setUser] = useState({});
+
+  const toggleModal = () => {
+    setModal(!modal);
+  };
+
+  
+  if(modal) {
+    document.body.classList.add('active-modal')
+  } else {
+    document.body.classList.remove('active-modal')
+  }
 
   const getChallenges = async () => {
     const data = await getDocs(challengesCollectionRef);
@@ -93,28 +108,42 @@ function App() {
     <div >
 
     {
+       //
        // manage signup and login
+       //
     }
     <header className='header'>
         <div className='login'>
-          <h3>Register User</h3>
-          <input className='input' placeholder='Email...' onChange={(event) => {setRegisterEmail(event.target.value)}}/>
-          <input className='input' placeholder='Password' onChange={(event) => {setRegisterPassword(event.target.value)}}/>
-
-          <button onClick={register}>Create User</button>
-        </div>     
-
-        <div className='login'>
-          <h3 >Login</h3>
-          <input className='input' placeholder='Email...' onChange={(event) => {setLoginEmail(event.target.value)}}/>
-          <input className='input' placeholder='Password' onChange={(event) => {setLoginPassword(event.target.value)}}/>
-          <button onClick={login}>Login</button>
-        </div>   
-
-        <div className='login'>
-          <h4> User Logged In: </h4>
           {user?.email}
-          <button onClick={logout}>Sign Out</button>
+          <img className='profilepic' src={logo} onClick={toggleModal}></img>
+          <input className='input' placeholder='Search...' onChange={(event) => {setSearch(event.target.value)}}/>
+          {modal && (
+          <div className="modal">
+          <div onClick={toggleModal} className="overlay"></div>
+          <div className="modal-content">
+            <h2>AHHHHHHH</h2>
+            <p>
+              <div className='login'>
+                <h3>Register User</h3>
+                <input className='input' placeholder='Email...' onChange={(event) => {setRegisterEmail(event.target.value)}}/>
+                <input className='input' placeholder='Password' onChange={(event) => {setRegisterPassword(event.target.value)}}/>
+
+                <button className='todo-btn' onClick={register}>Create User</button>
+              </div>     
+
+              <div className='login'>
+                <h3 >Login</h3>
+                <input className='input' placeholder='Email...' onChange={(event) => {setLoginEmail(event.target.value)}}/>
+                <input className='input' placeholder='Password' onChange={(event) => {setLoginPassword(event.target.value)}}/>
+                <button className='todo-btn' onClick={login}>Login</button>
+              </div>   
+            </p>
+            <button className="close-modal todo-btn" onClick={toggleModal}>
+              CLOSE
+            </button>
+          </div>
+        </div>
+        )}
         </div>
     </header>
       
@@ -127,12 +156,23 @@ function App() {
       <div className='TodoWrapper'>
         <h1>SUMMER LIST!</h1>
         {challenges.map((challenge) => {
+          var chaltext = challenge.challenge
               completedChallenges.map((challenges) => {
-                if(user?.uid === challenges.userid){
-                  document.getElementById(challenges.challengeid).className = "completed"
+                if(challenge?.userid === null || challenge?.userid === ""){
+                  console.log("null")
                 }
-              } )
-           return <div  className='Todo e' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id} > {challenge.challenge} </p> </div>})}
+                else if(user?.uid === challenges?.userid){
+                  document.getElementById(challenges?.challengeid).className = "completed"
+                }
+              } )  
+            if(search === ""){
+              return <div  className='Todo e' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {chaltext} </p> </div>
+            }else if (chaltext.includes(search)) {
+              return <div  className='Todo e' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {chaltext} </p> </div>
+          }else{
+            return <div> <p id={challenge.id}></p></div>;
+          }
+            })}
       </div>
       <div>
         <button className='savebutton e' onClick={save}> save </button>

@@ -13,6 +13,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  
 }
 
 .App {
@@ -53,19 +54,21 @@ h1 {
 }
 
 .todo-btn {
-  background: #C2B2B4;
-  color: #fff;
-  border: none;
-  padding: 0.55rem;
+  background: #1d1e22;
+  color: white;
+  border: solid;
+  border-color: #fff;
+  border-width: 1px;
+  margin: 10px;
+  padding: 2px;
   cursor: pointer;
-  
 }
 
 .Todo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #24252A;
+  background: #1d1e22;
   color: #fff;
   padding: 0.75rem 1rem;
   border-radius: 2px;
@@ -129,7 +132,8 @@ h1 {
   align-items: center;
   padding: 30px 10%;
   width: 100vw;
-  border-bottom: solid whitesmoke;
+  border-bottom:solid white;
+
 }
 
 .input{
@@ -137,4 +141,27 @@ h1 {
   color: #fff;
   border-style:solid;
   justify-content: space-between;
+  margin-left: 5px;
+}
+
+.login-btn {
+  background: #1d1e22;
+  color: white;
+  border: solid;
+  border-color: #fff;
+  border-width: 1px;
+  margin: 10px;
+  padding: 15px;
+  cursor: pointer;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+}
+.profilepic{
+  width: 50px;
+  height: auto;
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  cursor: pointer;
 }
