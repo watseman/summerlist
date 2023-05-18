@@ -1,13 +1,14 @@
 {
   "files": {
-    "main.css": "/summerlist/static/css/main.c35a24b8.css",
-    "main.js": "/summerlist/static/js/main.ee78c055.js",
+    "main.css": "/summerlist/static/css/main.08d8e415.css",
+    "main.js": "/summerlist/static/js/main.fe0ae26f.js",
+    "static/media/profilepic.png": "/summerlist/static/media/profilepic.bfdfdf0b93cea89198d9.png",
     "index.html": "/summerlist/index.html",
-    "main.c35a24b8.css.map": "/summerlist/static/css/main.c35a24b8.css.map",
-    "main.ee78c055.js.map": "/summerlist/static/js/main.ee78c055.js.map"
+    "main.08d8e415.css.map": "/summerlist/static/css/main.08d8e415.css.map",
+    "main.fe0ae26f.js.map": "/summerlist/static/js/main.fe0ae26f.js.map"
   },
   "entrypoints": [
-    "static/css/main.c35a24b8.css",
-    "static/js/main.ee78c055.js"
+    "static/css/main.08d8e415.css",
+    "static/js/main.fe0ae26f.js"
   ]
 }
