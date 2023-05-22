@@ -1,23 +1,26 @@
 import './App.css';
 import './modal.css'
 import React, {useState ,useEffect, useTransition} from 'react'
-import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc } from 'firebase/firestore';
-import { db, auth } from './firebase'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
+import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc, setDoc  } from 'firebase/firestore';
+import { db, auth, createUserDocument } from './firebase'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'; 
 import logo from './profilepic.png'
 
 function App() {
 
   const [challenges, setChallenges] = useState([]);
+  const [userData, setUserData] = useState([]);
   const challengesCollectionRef = collection(db, 'list');
   const userChallengesCollectionRef = collection(db, 'completedchallenges');
   const [completedChallenges, setCompletedChallenges] = useState([]);
+  const userCollectionRef = collection(db, 'users')
 
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
   const [modal, setModal] = useState(false);
+  const [score, setScore] = useState(0);
 
   const [search, setSearch] = useState("");
 
@@ -46,10 +49,24 @@ function App() {
     setCompletedChallenges(data2.docs.map((doc) => ({...doc.data(), id: doc.id})))
   }
 
+  const getScore = async (user) => {
+    const data = await getDocs(userCollectionRef);
+    setUserData(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
+    userData.map((doc) => {
+      console.log(doc.points)
+      if(doc.userid === user.user.uid ){
+        setScore(doc.points)
+        console.log(doc.points)
+      }
+    })
+  }
+
   const register = async () => {
     try{
       const user = await createUserWithEmailAndPassword(auth, registerEmail, registerPassword);
       console.log(user)
+      await addDoc(userCollectionRef,{userid: user.user.uid, points: 0, email:registerEmail});
+      console.log(user.user.uid)
     }catch(error){
       console.log(error.message);
     }
@@ -60,6 +77,7 @@ function App() {
       const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       setCompleted();
       console.log(user)
+      getScore(user);
     }catch(error){
       console.log(error.message);
     }
@@ -110,6 +128,7 @@ function App() {
           <button className='todo-btn' onClick={logout}> Log-out</button>
           {user?.email}
           <h1>SUMMER LIST!</h1>
+          <p>{score}</p>
           <img className='profilepic' src={logo} onClick={toggleModal}></img>
           <input className='input' placeholder='Search...' onChange={(event) => {setSearch(event.target.value)}}/>
           {modal && (
@@ -160,7 +179,7 @@ function App() {
               } )  
             if(search === ""){
               return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
-            }else if (challenge.challenge.includes(search)) {
+            }else if (challenge.challenge.toLowerCase().includes(search.toLowerCase())) {
               return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
           }else{
             return <div> <p id={challenge.id}></p></div>;
