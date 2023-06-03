@@ -1,9 +1,9 @@
 import './App.css';
 import './modal.css'
-import React, {useState ,useEffect, useTransition} from 'react'
-import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc, setDoc  } from 'firebase/firestore';
-import { db, auth, createUserDocument } from './firebase'
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut} from 'firebase/auth'; 
+import {React, useState ,useEffect} from 'react'
+import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { db, auth } from './firebase'
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
 import logo from './profilepic.png'
 
 function App() {
