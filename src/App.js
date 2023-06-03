@@ -1,7 +1,7 @@
 import './App.css';
 import './modal.css'
 import {React, useState ,useEffect} from 'react'
-import { collection, getDocs, updateDoc, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
 import { db, auth } from './firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
 import logo from './profilepic.png'
@@ -96,10 +96,12 @@ function App() {
   }, []);
 
   const save = async () => {
+    console.log("a")
     deleteUserCompleted()
     challenges.map( async (challenges) => {
       if(document.getElementById(challenges.id).className === 'completed'){
         await addDoc(userChallengesCollectionRef, {challengeid: challenges.id, userid: user?.uid})
+        console.log("save")
       } 
     })
   }
@@ -114,6 +116,7 @@ function App() {
       }
     })
   }
+
 
   return (
     <div >
@@ -178,9 +181,13 @@ function App() {
                 }
               } )  
             if(search === ""){
-              return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
+              return <p id={challenge.id} className='Todo' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                          document.getElementById(challenge.id).classList.toggle('Todo');}}> {challenge.challenge} </p>
             }else if (challenge.challenge.toLowerCase().includes(search.toLowerCase())) {
-              return <div  className='Todo' onClick={() => document.getElementById(challenge.id).classList.toggle('completed')}> <p id={challenge.id}> {challenge.challenge} </p> </div>
+
+              return  <p id={challenge.id} className='Todo' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo');}}>  {challenge.challenge} </p>
+
           }else{
             return <div> <p id={challenge.id}></p></div>;
           }

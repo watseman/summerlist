@@ -123,7 +123,28 @@ h1 {
 }
 
 .completed {
-  text-decoration: line-through;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #68866b;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
 }
 
 .login{
@@ -132,6 +153,8 @@ h1 {
 }
 
 .Todo:hover{opacity: 1}
+
+.completed:hover{opacity: 1}
 
 .btndiv{
   margin-top: 10;
