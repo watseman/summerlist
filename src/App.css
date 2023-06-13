@@ -8,12 +8,14 @@
   box-sizing: border-box;
 }
 
+
 body {
   background: #24252A;
   display: flex;
   justify-content: center;
   align-items: center;
   margin: 0;
+  overflow-x: hidden;
 }
 
 .App {
@@ -128,7 +130,7 @@ h1 {
   position: relative;
   left: 130px;
   align-items: center;
-  background: #68866b;
+  background: #1d1e22;
   color: #fff;
   padding: 0.75rem 1rem;
   border-radius: 2px;
@@ -145,6 +147,7 @@ h1 {
   opacity: 0.6;
   transition: opacity 0.3s;
   z-index: 1;
+  text-decoration: line-through;
 }
 
 .login{
@@ -166,7 +169,7 @@ h1 {
   align-items: center;
   padding: 30px 10%;
   width: 100vw;
-  background-image: linear-gradient(180deg, #464b5c, #24252A);
+  background-image: linear-gradient(180deg, #522839, #24252A);
 }
 
 .input{
@@ -198,3 +201,161 @@ h1 {
   right: 40px;
   cursor: pointer;
 }
+
+.Todo-Main {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #946647;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.Todo-Main:hover{opacity: 1}
+
+.Todo-Side {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #81407e;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+.Todo-Side:hover{opacity: 1}
+
+.Todo-Drugs {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #3c8b8b;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+.Todo-Drugs:hover{opacity: 1}
+
+.Todo-Sex {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #543c8b;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+.Todo-Sex:hover{opacity: 1}
+
+.Todo-Illegal {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #8b3c3c;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+
+.Todo-Illegal:hover{opacity: 1}
+
+.Todo-Cancelled {
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  left: 130px;
+  align-items: center;
+  background: #8d8731;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 2px;
+  margin-bottom: 5px;
+  cursor: pointer; 
+  font-size: 15px;
+  border: solid white;
+  border-width: 1px;
+  font-family: "Montserrat", sans-serif;
+  width: 35%;
+  display: inline-block;
+  margin-left: 50px;
+  margin-right: 80px;
+  opacity: 0.6;
+  transition: opacity 0.3s;
+  z-index: 1;
+}
+.Todo-Cancelled:hover{opacity: 1}

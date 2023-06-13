@@ -5,6 +5,7 @@ import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore'
 import { db, auth } from './firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
 import logo from './profilepic.png'
+import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 function App() {
 
@@ -13,7 +14,8 @@ function App() {
   const challengesCollectionRef = collection(db, 'list');
   const userChallengesCollectionRef = collection(db, 'completedchallenges');
   const [completedChallenges, setCompletedChallenges] = useState([]);
-  const userCollectionRef = collection(db, 'users')
+  const userCollectionRef = collection(db, 'users');
+  const [filter, setFilter] = useState('All');
 
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
@@ -49,16 +51,9 @@ function App() {
     setCompletedChallenges(data2.docs.map((doc) => ({...doc.data(), id: doc.id})))
   }
 
-  const getScore = async (user) => {
+  const getUserData = async () => {
     const data = await getDocs(userCollectionRef);
-    setUserData(data.docs.map((doc) => ({...doc.data(), id: doc.id})))
-    userData.map((doc) => {
-      console.log(doc.points)
-      if(doc.userid === user.user.uid ){
-        setScore(doc.points)
-        console.log(doc.points)
-      }
-    })
+    setUserData(data.docs.map((doc) => ({...doc.data(), id: doc.id})));
   }
 
   const register = async () => {
@@ -75,9 +70,11 @@ function App() {
   const login = async () => {
     try{
       const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
-      setCompleted();
+      getChallenges();
+      getUserData();
+      getScore();
+      console.log(userData)
       console.log(user)
-      getScore(user);
     }catch(error){
       console.log(error.message);
     }
@@ -106,6 +103,16 @@ function App() {
     })
   }
 
+  const getScore = () =>{
+    userData.map((users) => {
+      if(users.userid === user?.uid){
+        setScore(users.points)
+      }else{
+        console.log("noone logged in")
+      }
+    })
+  }
+
   const deleteUserCompleted = async (id) => {
     const data = await getDocs(userChallengesCollectionRef);
     completedChallenges.map(async (chalid) =>  {
@@ -115,6 +122,14 @@ function App() {
         await deleteDoc(doc(db,"completedchallenges", chalid.id))
       }
     })
+  }
+
+  const applyCompletedChallenges = () => {
+    completedChallenges.map((challenges) => {
+      if(user?.uid === challenges?.userid){
+        document.getElementById(challenges?.challengeid).className = "completed"
+      }
+    } )  
   }
 
 
@@ -133,7 +148,6 @@ function App() {
           <h1>SUMMER LIST!</h1>
           <p>{score}</p>
           <img className='profilepic' src={logo} onClick={toggleModal}></img>
-          <input className='input' placeholder='Search...' onChange={(event) => {setSearch(event.target.value)}}/>
           {modal && (
           <div className="modal">
           <div onClick={toggleModal} className="overlay"></div>
@@ -172,26 +186,29 @@ function App() {
 
       <div className='TodoWrapper'>
         {challenges.map((challenge) => {
-              completedChallenges.map((challenges) => {
-                if(challenge?.userid === null || challenge?.userid === ""){
-                  console.log("null")
-                }
-                else if(user?.uid === challenges?.userid){
-                  document.getElementById(challenges?.challengeid).className = "completed"
-                }
-              } )  
-            if(search === ""){
-              return <p id={challenge.id} className='Todo' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
-                                                                          document.getElementById(challenge.id).classList.toggle('Todo');}}> {challenge.challenge} </p>
-            }else if (challenge.challenge.toLowerCase().includes(search.toLowerCase())) {
-
-              return  <p id={challenge.id} className='Todo' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
-                                                                            document.getElementById(challenge.id).classList.toggle('Todo');}}>  {challenge.challenge} </p>
-
-          }else{
-            return <div> <p id={challenge.id}></p></div>;
+            if(challenge.catagory === "Main-Quest"){
+              return <p id={challenge.id} className='Todo-Main' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                          document.getElementById(challenge.id).classList.toggle('Todo-Main');}}> {challenge.challenge} </p>
+              
+            }else if (challenge.catagory === "Side-Quest") {
+              return  <p id={challenge.id} className='Todo-Side' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo-Side');}}>  {challenge.challenge} </p>
+          }else if (challenge.catagory === "Drugs"){
+            return  <p id={challenge.id} className='Todo-Drugs' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo-Drugs');}}>  {challenge.challenge} </p>
+          }else if (challenge.catagory === "Sex"){
+            return  <p id={challenge.id} className='Todo-Sex' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo-Sex');}}>  {challenge.challenge} </p>
+          }else if (challenge.catagory === "Illegal"){
+            return  <p id={challenge.id} className='Todo-Illegal' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo-Illegal');}}>  {challenge.challenge} </p>
+          }else if (challenge.catagory === "Cancelled"){
+            return  <p id={challenge.id} className='Todo-Cancelled' onClick={() => {document.getElementById(challenge.id).classList.toggle('completed');
+                                                                            document.getElementById(challenge.id).classList.toggle('Todo-Cancelled');}}>  {challenge.challenge} </p>
           }
             })}
+
+            {applyCompletedChallenges()}
       </div>
       <div>
         <button className='savebutton e' onClick={save}> save </button>
