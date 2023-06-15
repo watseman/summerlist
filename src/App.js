@@ -1,7 +1,7 @@
 import './App.css';
 import './modal.css'
 import {React, useState ,useEffect} from 'react'
-import { collection, getDocs, doc, addDoc, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, addDoc, deleteDoc, setDoc, updateDoc } from 'firebase/firestore';
 import { db, auth } from './firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
 import logo from './profilepic.png'
@@ -23,6 +23,7 @@ function App() {
   const [loginPassword, setLoginPassword] = useState("");
   const [modal, setModal] = useState(false);
   const [score, setScore] = useState(0);
+  const [leaderboard, setLeaderboard] = useState(false);
 
   const [search, setSearch] = useState("");
 
@@ -32,8 +33,18 @@ function App() {
     setModal(!modal);
   };
 
+  const toggleLeaderBoard = () => {
+    setLeaderboard(!leaderboard);
+  };
+
   
   if(modal) {
+    document.body.classList.add('active-modal')
+  } else {
+    document.body.classList.remove('active-modal')
+  }
+
+  if(leaderboard) {
     document.body.classList.add('active-modal')
   } else {
     document.body.classList.remove('active-modal')
@@ -71,10 +82,6 @@ function App() {
     try{
       const user = await signInWithEmailAndPassword(auth, loginEmail, loginPassword);
       getChallenges();
-      getUserData();
-      getScore();
-      console.log(userData)
-      console.log(user)
     }catch(error){
       console.log(error.message);
     }
@@ -90,6 +97,7 @@ function App() {
       setUser(currentUser);
     })
     getChallenges();
+    getUserData();
   }, []);
 
   const save = async () => {
@@ -100,6 +108,26 @@ function App() {
         await addDoc(userChallengesCollectionRef, {challengeid: challenges.id, userid: user?.uid})
         console.log("save")
       } 
+    })
+    countPoints();
+  }
+
+  const countPoints = async () => {
+    let userScore = 0;
+    challenges.map( async (challenges) => {
+      if(document.getElementById(challenges.id).className === 'completed'){
+        userScore += challenges.points 
+      } 
+    })
+    console.log(userScore)
+    
+    userData.map(async (users) => {
+      if(user?.uid === users.userid){
+        let userDoc = doc(db, "users", users.id)
+        let newFields = {points: userScore}
+        await updateDoc(userDoc, newFields)
+        console.log("points updated for " + user.email)
+      }
     })
   }
 
@@ -114,7 +142,6 @@ function App() {
   }
 
   const deleteUserCompleted = async (id) => {
-    const data = await getDocs(userChallengesCollectionRef);
     completedChallenges.map(async (chalid) =>  {
 
       if(user?.uid === chalid.userid){
@@ -122,6 +149,7 @@ function App() {
         await deleteDoc(doc(db,"completedchallenges", chalid.id))
       }
     })
+
   }
 
   const applyCompletedChallenges = () => {
@@ -146,7 +174,6 @@ function App() {
           <button className='todo-btn' onClick={logout}> Log-out</button>
           {user?.email}
           <h1>SUMMER LIST!</h1>
-          <p>{score}</p>
           <img className='profilepic' src={logo} onClick={toggleModal}></img>
           {modal && (
           <div className="modal">
@@ -174,6 +201,20 @@ function App() {
             </button>
           </div>
         </div>
+        )}
+
+        <button onClick={toggleLeaderBoard}> Leaderboard </button>
+
+        {leaderboard && (
+          <div className='modal'>
+            <div onClick={toggleLeaderBoard} className='overlay'></div>
+            <div className='modal-content'>
+              <h5> LEADERBOARD </h5>
+              {userData.map((users) => {
+                return <p> {users.email} {users.points}</p>
+              })}
+            </div>
+          </div>
         )}
         </div>
     </header>
