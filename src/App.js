@@ -5,6 +5,8 @@ import { collection, getDocs, doc, addDoc, deleteDoc, setDoc, updateDoc } from '
 import { db, auth } from './firebase'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from 'firebase/auth'; 
 import logo from './profilepic.png'
+import leaderboardpic from './leaderboard.png'
+import logout from './logout.png'
 import { eventWrapper } from '@testing-library/user-event/dist/utils';
 
 function App() {
@@ -161,6 +163,7 @@ function App() {
   }
 
 
+
   return (
     <div >
 
@@ -172,8 +175,8 @@ function App() {
     <header className='header'>
         <div className='login'>
           <button className='todo-btn' onClick={logout}> Log-out</button>
+          <img className='logout' src={logout} onClick={logout}></img>
           {user?.email}
-          <h1>SUMMER LIST!</h1>
           <img className='profilepic' src={logo} onClick={toggleModal}></img>
           {modal && (
           <div className="modal">
@@ -203,7 +206,7 @@ function App() {
         </div>
         )}
 
-        <button onClick={toggleLeaderBoard}> Leaderboard </button>
+        <img className='leaderboard' src={leaderboardpic} onClick={toggleLeaderBoard}></img>
 
         {leaderboard && (
           <div className='modal'>
